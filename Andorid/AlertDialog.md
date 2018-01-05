@@ -42,15 +42,20 @@ AlertDialog dialog = builder.create();
 
 您可以添加三种不同的操作按钮：
 
-- 肯定
+| ``The identifier for the negative button. |                                        |
+| ---------------------------------------- | -------------------------------------- |
+| `int`                                    | The identifier for the neutral button. |
+| `int                                     |                                        |
+
+- `BUTTON_POSITIVE`肯定
 
   您应该使用此按钮来接受并继续执行操作（“确定”操作）。
 
-- 否定
+- `BUTTON_NEGATIVE`否定
 
   您应该使用此按钮来取消操作。
 
-- 中性
+- `BUTTON_NEUTRAL`中性
 
   您应该在用户可能不想继续执行操作，但也不一定想要取消操作时使用此按钮。 它出现在肯定按钮和否定按钮之间。 例如，实际操作可能是“稍后提醒我”。
 
@@ -87,6 +92,8 @@ AlertDialog dialog = builder.create();
 - 传统单选列表
 - 永久性单选列表（单选按钮）
 - 永久性多选列表（复选框）
+
+> 注意：使用列表时，不可以使用 `setMessage()`, 否则message会把items覆盖. 
 
 ### 添加传统单选列表
 
@@ -128,10 +135,14 @@ public Dialog onCreateDialog(Bundle savedInstanceState) {
            .setMultiChoiceItems(R.array.toppings, null,
                       new DialogInterface.OnMultiChoiceClickListener() {
                @Override
+               /** 
+               * @param id 代表按下的按钮
+               * @param dialog 代表对话框
+               */
                public void onClick(DialogInterface dialog, int which,
                        boolean isChecked) {
                    if (isChecked) {
-                       // If the user checked the item, add it to the selected items
+                       // If the user checked the item, add it to the selected item
                        mSelectedItems.add(which);
                    } else if (mSelectedItems.contains(which)) {
                        // Else, if the item is already in the array, remove it
